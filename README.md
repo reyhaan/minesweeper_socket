@@ -2,6 +2,54 @@
 
 Realtime location tracking for ShuttleUp
 
+### Integration Instructions
+#### Socket-io Events
+* Subscribe
+  * Used to subscribe to room between admin and driver
+* Coordinates
+  * Client
+    * Sends coordinates to server
+  * Server
+    * forwards coordinates to admin
+
+#### Sample Code
+* Admin
+```
+import socketio
+
+sio = socketio.Client()
+
+
+@sio.on('connect')
+def connect():
+  print('Connected to server')
+  sio.emit('subscribe', {'room': 'testing'}) # subscribes to a room as connect to server
+
+@sio.on('coordinates')
+def coordinates(data):
+  print('Received coordinates ', data) # handles coordinates
+
+sio.connect('http://localhost:3000') # connect to server
+sio.wait() # waits until connection closes
+```
+* Driver
+```
+import socketio
+
+sio = socketio.Client()
+
+@sio.on('connect')
+def connect():
+  print('Connected to server')
+  print('Sending coordinates')
+  # simulates sending hundred coordinates into a room
+  for i in range(100):
+    sio.emit('coordinates', {'lat': 'teating', 'lon': 'testing', 'room': 'testing:testing'})
+
+sio.connect('http://localhost:3000') # connect to server
+sio.disconnect() # disconnects connection
+```
+
 ### Setup Prerequisites
 * Python >= 3.7 - [Install](https://www.python.org/downloads/release/python-372/)
 * Pip - [Install](https://pip.pypa.io/en/stable/installing/)
@@ -38,3 +86,7 @@ If you've made it here, you're all set!
 ```
 make dev
 ```
+
+### Production Deployment
+* Make sure to have redis server running
+* Set redis url environment variable REDIS

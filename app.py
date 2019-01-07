@@ -1,26 +1,22 @@
 import os
 import socketio
+from aiohttp.web import Application, RouteTableDef, json_response, Request, run_app
 
+from api.tracking import sio
 from dotenv import load_dotenv
-from sanic import Sanic
-from sanic.request import Request
-from sanic.log import logger
-from sanic.response import json
+
 
 load_dotenv()
 
-app: Sanic = Sanic()
-redis_mgr = socketio.RedisManager(os.getenv('REDIS') if os.getenv('ENV') is not 'dev' else os.getenv('REDIS_DEV'))
-sio = socketio.AsyncServer(async_mode='sanic')
+app: Application = Application()
+routes: RouteTableDef = RouteTableDef()
 
-@app.route('/ping')
+@routes.get('/ping')
 async def ping(request: Request):
-  return json({'ping': 'pong'})
-
-@sio.on('connect')
-def connect(sid, environ):
-    logger.info(f'client connected - {sid}')
+  return json_response({'ping': 'pong'})
 
 if __name__ == '__main__':
+  app.add_routes(routes)
   sio.attach(app)
-  app.run(host='0.0.0.0', port=os.getenv('PORT'), debug=True if os.getenv('ENV') is not 'dev' else False)
+  run_app(app, port=os.getenv('PORT', 3000))
+  
