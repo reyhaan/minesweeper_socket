@@ -1,4 +1,4 @@
-# ShuttleUp Tracking
+# ShuttleUp Event Service
 
 Realtime location tracking for ShuttleUp
 
