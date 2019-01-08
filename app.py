@@ -5,7 +5,6 @@ from aiohttp.web import Application, RouteTableDef, json_response, Request, run_
 from api.tracking import sio
 from dotenv import load_dotenv
 
-
 load_dotenv()
 
 app: Application = Application()
