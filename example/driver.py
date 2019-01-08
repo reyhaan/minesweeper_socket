@@ -7,7 +7,7 @@ sio = socketio.Client()
 def connect():
     print("Connected to server")
     print("Sending coordinates")
-    for i in range(100):
+    for _ in range(100):
         sio.emit(
             "coordinates", {"lat": 20.222, "lon": 34.444, "room": "testing:testing"}
         )
