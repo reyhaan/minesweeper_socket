@@ -1,19 +1,19 @@
 version: "3"
-services: 
+services:
   cache:
     image: redis:alpine
-    networks: 
-    - backend
-  api: 
-    build: 
+    networks:
+      - backend
+  api:
+    build:
       context: .
     depends_on:
       - cache
     environment:
       - REDIS_DEV=redis://cache
-    ports: 
+    ports:
       - "3000:3000"
-    volumes: 
+    volumes:
       - "./:/shuttle-tracking"
     env_file:
       - .env
