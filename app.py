@@ -10,12 +10,14 @@ load_dotenv()
 app: Application = Application()
 routes: RouteTableDef = RouteTableDef()
 
-@routes.get('/ping')
-async def ping(request: Request):
-  return json_response({'ping': 'pong'})
 
-if __name__ == '__main__':
-  app.add_routes(routes)
-  sio.attach(app)
-  run_app(app, port=os.getenv('PORT', 3000))
-  
+@routes.get("/")
+async def ping(request: Request):
+    return json_response({"Shuttle-up": "Event Service"})
+
+
+if __name__ == "__main__":
+    app.add_routes(routes)
+    sio.attach(app)
+    run_app(app, port=os.getenv("PORT", 3000))
+
