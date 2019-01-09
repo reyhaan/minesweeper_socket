@@ -6,7 +6,7 @@ sio = socketio.Client()
 @sio.on("connect")
 def connect():
     print("Connected to server")
-    sio.emit("subscribe", {"room": "testing"})
+    sio.emit("subscribe", {"room": "room": "testing:testing"})
 
 
 @sio.on("coordinates")
