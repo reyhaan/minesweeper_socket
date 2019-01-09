@@ -13,5 +13,6 @@ def connect():
         )
 
 
-sio.connect("http://localhost:3000")  # connect to server
+sio.connect("https://shuttle-up-tracking.herokuapp.com")  # connect to prod server
+# sio.connect("http://localhost:3000")  # connect to server
 sio.disconnect()
