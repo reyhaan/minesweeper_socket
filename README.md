@@ -108,4 +108,5 @@ make dev
 ### Production Deployment
 
 - Make sure to have redis server running
-- Set redis url environment variable REDIS
+- Set redis url environment variable `REDIS_URL`
+- Set environment variable `ENV` to `prod`
