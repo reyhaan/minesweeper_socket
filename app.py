@@ -4,8 +4,6 @@ import dotenv
 from aiohttp import web
 from api.tracking import sio
 
-dotenv.load_dotenv()
-
 async def init():
     app: web.Application = web.Application()
     routes: web.RouteTableDef = web.RouteTableDef()
@@ -19,8 +17,8 @@ async def init():
     return app
 
 if __name__ == "__main__":
-    REDIS_MGR = socketio.AsyncRedisManager(
-        os.getenv("REDIS_URL") if os.getenv("ENV") is not "dev" else os.getenv("REDIS_DEV")
-    )
+    dotenv.load_dotenv()
+    redis_url = os.getenv("REDIS_DEV") if os.getenv("ENV") == "dev" else os.getenv("REDIS_URL")
+    REDIS_MGR = socketio.AsyncRedisManager(redis_url)
     app = init()
     web.run_app(app, port=os.getenv("PORT", 3000))
